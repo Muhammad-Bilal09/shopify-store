@@ -10,8 +10,6 @@ import productsColors from "../../../utils/data/products-colors";
 import productsSizes from "../../../utils/data/products-sizes";
 import CheckboxColor from "../../products-filter/form-builder/checkbox-color";
 
-// ✅ Define types inline
-
 type ShopifyImageNode = {
   node: {
     src: string;
@@ -20,7 +18,7 @@ type ShopifyImageNode = {
 
 type ShopifyVariantNode = {
   node: {
-    id: string; // Add variant ID
+    id: string;
     price: {
       amount: string;
     };
@@ -67,10 +65,8 @@ const Content = ({ product }: ProductContentProps) => {
     );
   };
 
-  // ✅ Extract image URL safely
   const imageSrc = product.images?.edges?.[0]?.node?.src || "/placeholder.jpg";
 
-  // ✅ Extract price and variant ID safely
   const price = product.variants?.edges?.[0]?.node?.price?.amount || "0";
   const variantId = product.variants?.edges?.[0]?.node?.id || "";
 
@@ -83,7 +79,7 @@ const Content = ({ product }: ProductContentProps) => {
       count,
       color,
       size: itemSize,
-      variantId, // Include variant ID
+      variantId,
     };
 
     const productStore = {

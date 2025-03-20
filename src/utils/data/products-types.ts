@@ -10,11 +10,6 @@ export const productsTypes = [
     count: "131",
   },
   {
-    id: "3",
-    name: "Tank Tops",
-    count: "56",
-  },
-  {
     id: "4",
     name: "Dress shirts",
     count: "8",

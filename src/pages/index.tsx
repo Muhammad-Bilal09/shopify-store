@@ -1,12 +1,15 @@
-import { useQuery, gql } from "@apollo/client";
-import client from "@/lib/apolloClient";
+import { useEffect, useState } from "react";
 import Footer from "@/components/footer";
 import PageIntro from "@/components/page-intro";
 import ProductsFeatured from "@/components/products-featured";
 import Subscribe from "@/components/subscribe";
 import Layout from "../layouts/Main";
 
-const GET_FEATURED_DATA = gql`
+const CONTENTFUL_SPACE_ID = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!;
+const CONTENTFUL_ACCESS_TOKEN =
+  process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!;
+
+const GET_FEATURED_DATA = `
   query {
     moredetailsCollection {
       items {
@@ -14,7 +17,7 @@ const GET_FEATURED_DATA = gql`
         image {
           url
         }
-        link
+        buttontext
       }
     }
     viewallCollection {
@@ -23,16 +26,17 @@ const GET_FEATURED_DATA = gql`
         image {
           url
         }
-        link
+        buttontext
+        price
       }
     }
-    showcollectionCollection {
+      showcollectionCollection {
       items {
         title
         image {
           url
         }
-        link
+        buttontext
       }
     }
     shippingCollection {
@@ -53,124 +57,144 @@ const GET_FEATURED_DATA = gql`
         description
       }
     }
-    qualityCollection {
+      assetsCollection {
       items {
         title
         description
       }
-    }
+    } 
   }
 `;
 
+interface FeaturedItem {
+  title: string;
+  image?: {
+    url: string;
+  };
+  buttontext?: string;
+  description?: string;
+  price?: string;
+}
+
+interface ContentfulResponse {
+  data: {
+    moredetailsCollection?: { items: FeaturedItem[] };
+    viewallCollection?: { items: FeaturedItem[] };
+    showcollectionCollection?: { items: FeaturedItem[] };
+    shippingCollection?: { items: FeaturedItem[] };
+    paymentCollection?: { items: FeaturedItem[] };
+    guaranteeCollection?: { items: FeaturedItem[] };
+    assetsCollection?: { items: FeaturedItem[] };
+  };
+  errors?: { message: string }[];
+}
+
 const IndexPage = () => {
-  const { loading, error, data } = useQuery(GET_FEATURED_DATA, { client });
+  const [featuredItems, setFeaturedItems] = useState<FeaturedItem[]>([]);
+  const [infoItems, setInfoItems] = useState<FeaturedItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Extract data for featured section
-  const moreDetails = data?.moredetailsCollection?.items[0];
-  const viewAll = data?.viewallCollection?.items[0];
-  const showCollection = data?.showcollectionCollection?.items[0];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${CONTENTFUL_ACCESS_TOKEN}`,
+            },
+            body: JSON.stringify({ query: GET_FEATURED_DATA }),
+          }
+        );
 
-  // Extract data for second section
-  const shipping = data?.shippingCollection?.items[0];
-  const payment = data?.paymentCollection?.items[0];
-  const guarantee = data?.guaranteeCollection?.items[0];
-  const quality = data?.qualityCollection?.items[0];
+        const json: ContentfulResponse = await response.json();
+
+        if (json.errors) {
+          throw new Error(json.errors.map((err) => err.message).join(", "));
+        }
+
+        const moreDetails = json.data.moredetailsCollection?.items || [];
+        const viewAll = json.data.viewallCollection?.items || [];
+        const showCollection = json.data.showcollectionCollection?.items || [];
+        const featuredItems = [...moreDetails, ...viewAll, ...showCollection];
+
+        const shipping = json.data.shippingCollection?.items || [];
+        const payment = json.data.paymentCollection?.items || [];
+        const guarantee = json.data.guaranteeCollection?.items || [];
+        const quality = json.data.assetsCollection?.items || [];
+        const infoItems = [...shipping, ...payment, ...guarantee, ...quality];
+
+        setFeaturedItems(featuredItems);
+        setInfoItems(infoItems);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading featured data: {error}</p>;
 
   return (
     <Layout>
       <PageIntro />
 
-      {/* Conditionally render the featured section */}
-      {loading && <p>Loading featured data...</p>}
-      {error && <p>Error loading featured data: {error.message}</p>}
-      {!loading && !error && moreDetails && viewAll && showCollection && (
-        <section className="featured">
-          <div className="container">
+      <section className="featured">
+        <div className="container">
+          {featuredItems.map((item, index) => (
             <article
-              style={{ backgroundImage: `url(${showCollection.image.url})` }}
-              className="featured-item featured-item-large"
+              key={index}
+              style={{ backgroundImage: `url(${item.image?.url})` }}
+              className={`featured-item ${
+                index === 0
+                  ? "featured-item-large"
+                  : index === 1
+                    ? "featured-item-small-first"
+                    : "featured-item-small"
+              }`}
             >
               <div className="featured-item__content">
-                <h3>{showCollection.title}</h3>
-                <a href={showCollection.link} className="btn btn--rounded">
-                  Show Collection
-                </a>
+                <h3>{item.title}</h3>
+                {item.buttontext && (
+                  <a href="#" className="btn btn--rounded">
+                    {item.buttontext}
+                  </a>
+                )}
               </div>
             </article>
+          ))}
+        </div>
+      </section>
 
-            <article
-              style={{ backgroundImage: `url(${moreDetails.image.url})` }}
-              className="featured-item featured-item-small-first"
-            >
-              <div className="featured-item__content">
-                <h3>{moreDetails.title}</h3>
-                <a href={moreDetails.link} className="btn btn--rounded">
-                  More details
-                </a>
-              </div>
-            </article>
+      <section className="section">
+        <div className="container">
+          <header className="section__intro">
+            <h4>Why should you choose us?</h4>
+          </header>
 
-            <article
-              style={{ backgroundImage: `url(${viewAll.image.url})` }}
-              className="featured-item featured-item-small"
-            >
-              <div className="featured-item__content">
-                <h3>{viewAll.title}</h3>
-                <a href={viewAll.link} className="btn btn--rounded">
-                  VIEW ALL
-                </a>
-              </div>
-            </article>
-          </div>
-        </section>
-      )}
-
-      {/* Conditionally render the second section */}
-      {!loading && !error && shipping && payment && guarantee && quality && (
-        <section className="section">
-          <div className="container">
-            <header className="section__intro">
-              <h4>Why should you choose us?</h4>
-            </header>
-
-            <ul className="shop-data-items">
-              <li>
-                <i className="icon-shipping" />
+          <ul className="shop-data-items">
+            {infoItems.map((item, index) => (
+              <li key={index}>
+                <i
+                  className={`icon-${index === 0 ? "shipping" : index === 1 ? "payment" : index === 2 ? "cash" : "materials"}`}
+                />
                 <div className="data-item__content">
-                  <h4>{shipping.title}</h4>
-                  <p>{shipping.description}</p>
+                  <h4>{item.title}</h4>
+                  <p>{item.description}</p>
                 </div>
               </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-              <li>
-                <i className="icon-payment" />
-                <div className="data-item__content">
-                  <h4>{payment.title}</h4>
-                  <p>{payment.description}</p>
-                </div>
-              </li>
-
-              <li>
-                <i className="icon-cash" />
-                <div className="data-item__content">
-                  <h4>{guarantee.title}</h4>
-                  <p>{guarantee.description}</p>
-                </div>
-              </li>
-
-              <li>
-                <i className="icon-materials" />
-                <div className="data-item__content">
-                  <h4>{quality.title}</h4>
-                  <p>{quality.description}</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </section>
-      )}
-
-      {/* Always render the rest of the components */}
       <ProductsFeatured />
       <Subscribe />
       <Footer />
@@ -179,118 +203,3 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
-
-// import Footer from "@/components/footer";
-// import PageIntro from "@/components/page-intro";
-// import ProductsFeatured from "@/components/products-featured";
-// import Subscribe from "@/components/subscribe";
-
-// import Layout from "../layouts/Main";
-
-// const IndexPage = () => {
-//   return (
-//     <Layout>
-//       <PageIntro />
-
-//       <section className="featured">
-//         <div className="container">
-//           <article
-//             style={{ backgroundImage: "url(/images/featured-1.jpg)" }}
-//             className="featured-item featured-item-large"
-//           >
-//             <div className="featured-item__content">
-//               <h3>New arrivals are now in!</h3>
-//               <a href="#" className="btn btn--rounded">
-//                 Show Collection
-//               </a>
-//             </div>
-//           </article>
-
-//           <article
-//             style={{ backgroundImage: "url(/images/featured-2.jpg)" }}
-//             className="featured-item featured-item-small-first"
-//           >
-//             <div className="featured-item__content">
-//               <h3>Basic t-shirts $29,99</h3>
-//               <a href="#" className="btn btn--rounded">
-//                 More details
-//               </a>
-//             </div>
-//           </article>
-
-//           <article
-//             style={{ backgroundImage: "url(/images/featured-3.jpg)" }}
-//             className="featured-item featured-item-small"
-//           >
-//             <div className="featured-item__content">
-//               <h3>Sale this summer</h3>
-//               <a href="#" className="btn btn--rounded">
-//                 VIEW ALL
-//               </a>
-//             </div>
-//           </article>
-//         </div>
-//       </section>
-
-//       <section className="section">
-//         <div className="container">
-//           <header className="section__intro">
-//             <h4>Why should you choose us?</h4>
-//           </header>
-
-//           <ul className="shop-data-items">
-//             <li>
-//               <i className="icon-shipping" />
-//               <div className="data-item__content">
-//                 <h4>Free Shipping</h4>
-//                 <p>
-//                   All purchases over $199 are eligible for free shipping via
-//                   USPS First Class Mail.
-//                 </p>
-//               </div>
-//             </li>
-
-//             <li>
-//               <i className="icon-payment" />
-//               <div className="data-item__content">
-//                 <h4>Easy Payments</h4>
-//                 <p>
-//                   All payments are processed instantly over a secure payment
-//                   protocol.
-//                 </p>
-//               </div>
-//             </li>
-
-//             <li>
-//               <i className="icon-cash" />
-//               <div className="data-item__content">
-//                 <h4>Money-Back Guarantee</h4>
-//                 <p>
-//                   If an item arrived damaged or you've changed your mind, you
-//                   can send it back for a full refund.
-//                 </p>
-//               </div>
-//             </li>
-
-//             <li>
-//               <i className="icon-materials" />
-//               <div className="data-item__content">
-//                 <h4>Finest Quality</h4>
-//                 <p>
-//                   Designed to last, each of our products has been crafted with
-//                   the finest materials.
-//                 </p>
-//               </div>
-//             </li>
-//           </ul>
-//         </div>
-//       </section>
-
-//       <ProductsFeatured />
-//       <Subscribe />
-//       <Footer />
-//     </Layout>
-//   );
-// };
-
-// export default IndexPage;
