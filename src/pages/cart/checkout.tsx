@@ -40,8 +40,6 @@ const CheckoutPage = () => {
         price: item.price,
       }));
 
-      console.log("Payload being sent to API:", payload);
-
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
@@ -55,7 +53,11 @@ const CheckoutPage = () => {
       if (response.ok) {
         window.location.href = data.checkoutUrl;
       } else {
-        setError(data.error || "Failed to proceed to payment");
+        if (response.status === 401) {
+          router.push("/login");
+        } else {
+          setError(data.error || "Failed to proceed to payment");
+        }
       }
     } catch (err) {
       setError("An error occurred while processing your request");
@@ -63,7 +65,6 @@ const CheckoutPage = () => {
       setLoading(false);
     }
   };
-
   return (
     <Layout>
       <section className="cart">

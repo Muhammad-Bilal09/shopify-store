@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { createCheckout, CartItem } from "@/lib/shopify";
+import { getIronSession } from "iron-session";
+import { sessionOptions } from "@/lib/session";
+import { UserSession } from "@/types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,6 +13,12 @@ export default async function handler(
   }
 
   try {
+    const session = await getIronSession(req, res, sessionOptions);
+
+    if (!(session as { user?: UserSession }).user) {
+      return res.status(401).json({ error: "Unauthorized. Please log in." });
+    }
+
     const { cartItems } = req.body;
 
     if (!cartItems || !Array.isArray(cartItems)) {
