@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { pid } = query;
 
   try {
-    const res = await fetch(`${server}/api/product/${pid}`);
+    const res = await fetch(`/api/product/${pid}`);
     if (!res.ok) throw new Error("Failed to fetch product");
     const product = await res.json();
 
