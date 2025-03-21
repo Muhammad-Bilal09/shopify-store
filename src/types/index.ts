@@ -66,3 +66,18 @@ export type GtagEventType = {
   label: string;
   value: string;
 };
+
+export type SessionData = {
+  user?: {
+    id: string;
+    email: string;
+    password: string;
+    name?: string;
+  };
+};
+
+export type UserSession = {
+  id: string;
+  email: string;
+  name: string;
+};

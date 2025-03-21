@@ -105,25 +105,6 @@ const ProductsFilter = ({
         <div className="products-filter__block">
           <button type="button">Size</button>
           <div className="products-filter__block__content checkbox-square-wrapper">
-            <button
-              type="button"
-              onClick={() => handleCollectionChange(null)}
-              style={{
-                backgroundColor:
-                  selectedCollection === null ? "#4CAF50" : "transparent",
-                color: selectedCollection === null ? "#fff" : "#333",
-                padding: "8px 12px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                textAlign: "left",
-                fontSize: "14px",
-                width: "100%",
-                marginBottom: "8px",
-              }}
-            >
-              All
-            </button>
             {productsSizes.map((size) => (
               <button
                 key={size.id}
@@ -153,25 +134,6 @@ const ProductsFilter = ({
           <button type="button">Color</button>
           <div className="products-filter__block__content">
             <div className="checkbox-color-wrapper">
-              <button
-                type="button"
-                onClick={() => handleCollectionChange(null)}
-                style={{
-                  backgroundColor:
-                    selectedCollection === null ? "#4CAF50" : "transparent",
-                  color: selectedCollection === null ? "#fff" : "#333",
-                  padding: "8px 12px",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  fontSize: "14px",
-                  width: "100%",
-                  marginBottom: "8px",
-                }}
-              >
-                All
-              </button>
               {productsColors.map((color) => (
                 <button
                   key={color.id}

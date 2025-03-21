@@ -18,14 +18,18 @@
   ],
   "dependencies": {
     "@apollo/client": "^3.13.4",
+    "@prisma/client": "^6.5.0",
     "@reduxjs/toolkit": "^1.8.1",
     "@shopify/shopify-api": "^11.10.0",
+    "bcryptjs": "^3.0.2",
     "contentful": "^11.5.6",
     "eslint-config-next": "^15.0.3",
     "fslightbox-react": "^1.7.6",
     "graphql": "^16.10.0",
     "graphql-request": "^7.1.2",
+    "iron-session": "^8.0.4",
     "lodash": "^4.17.21",
+    "mongodb": "^6.15.0",
     "next": "^15.2.2",
     "next-redux-wrapper": "^8.1.0",
     "rc-slider": "^9.3.1",
@@ -64,6 +68,7 @@
     "eslint-plugin-unused-imports": "^4.1.4",
     "node-fetch": "^3.1.1",
     "prettier": "^3.4.1",
+    "prisma": "^6.5.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0"
   }
