@@ -9,7 +9,7 @@ import Gallery from "@/components/product-single/gallery";
 // import Reviews from "@/components/product-single/reviews";
 import ProductsFeatured from "@/components/products-featured";
 import Layout from "../../layouts/Main";
-import { server } from "../../utils/server";
+// import { server } from "../../utils/server";
 
 type ShopifyImageNode = {
   node: {
