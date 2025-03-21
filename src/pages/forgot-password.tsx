@@ -1,19 +1,24 @@
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-
+import { useForm, SubmitHandler } from "react-hook-form";
 import Layout from "../layouts/Main";
 import { server } from "../utils/server";
 import { postData } from "../utils/services";
 
+// Define the form data type
 type ForgotMail = {
   email: string;
 };
 
 const ForgotPassword = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotMail>();
 
-  const onSubmit = async (data: ForgotMail) => {
-    await postData(`${server}/api/login`, {
+  // Form submission handler
+  const onSubmit: SubmitHandler<ForgotMail> = async (data) => {
+    await postData(`${server}/api/forgot-password`, {
       email: data.email,
     });
   };
@@ -32,47 +37,28 @@ const ForgotPassword = () => {
           <div className="form-block">
             <h2 className="form-block__title">Forgot your password?</h2>
             <p className="form-block__description">
-              Enter your email or phone number and recover your account
+              Enter your email to recover your account
             </p>
 
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <div className="form__input-row">
                 <input
                   className="form__input"
-                  placeholder="email"
-                  type="text"
-                  name="email"
-                  ref={register({
-                    required: true,
-                    pattern:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  placeholder="Email"
+                  type="email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "Please enter a valid email",
+                    },
                   })}
                 />
 
-                {errors.email && errors.email.type === "required" && (
+                {errors.email && (
                   <p className="message message--error">
-                    This field is required
-                  </p>
-                )}
-
-                {errors.email && errors.email.type === "pattern" && (
-                  <p className="message message--error">
-                    Please write a valid email
-                  </p>
-                )}
-              </div>
-
-              <div className="form__input-row">
-                <input
-                  className="form__input"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  ref={register({ required: true })}
-                />
-                {errors.password && errors.password.type === "required" && (
-                  <p className="message message--error">
-                    This field is required
+                    {errors.email.message}
                   </p>
                 )}
               </div>
