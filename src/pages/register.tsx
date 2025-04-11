@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router"; // Import useRouter for redirection
+import { useRouter } from "next/router";
 import Layout from "../layouts/Main";
 
 const RegisterPage = () => {
@@ -12,8 +12,8 @@ const RegisterPage = () => {
   const [termsAgreed, setTermsAgreed] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
-  const router = useRouter(); // Initialize useRouter
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

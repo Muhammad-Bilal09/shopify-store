@@ -1,23 +1,10 @@
+import { GalleryProductType } from "@/types";
 import React from "react";
 
-type ShopifyImageNode = {
-  node: {
-    src: string;
-  };
-};
-
-type GalleryProductType = {
-  images?: {
-    edges: ShopifyImageNode[];
-  };
-};
-
 const Gallery = ({ images }: GalleryProductType) => {
-  // Extract image URLs safely
   const imageArray =
     images?.edges?.map((imageEdge) => imageEdge.node.src) || [];
 
-  // Use a fallback image if no images are available
   const featImage =
     imageArray.length > 0 ? imageArray[0] : "/path/to/fallback-image.jpg";
 

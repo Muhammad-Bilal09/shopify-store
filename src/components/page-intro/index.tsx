@@ -1,3 +1,4 @@
+import { ContentfulResponse, SliderItem } from "@/types";
 import { useEffect, useState } from "react";
 import SwiperCore, { EffectFade, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,21 +8,6 @@ SwiperCore.use([EffectFade, Navigation]);
 const CONTENTFUL_SPACE_ID = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!;
 const CONTENTFUL_ACCESS_TOKEN =
   process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!;
-
-interface SliderItem {
-  title: string;
-  image: {
-    url: string;
-  };
-}
-
-interface ContentfulResponse {
-  data: {
-    sliderItemCollection?: { items: SliderItem[] };
-    sliderItem2Collection?: { items: SliderItem[] };
-  };
-  errors?: { message: string }[];
-}
 
 const GET_SLIDER_DATA = `
   query {
@@ -89,7 +75,7 @@ const PageIntro: React.FC = () => {
   return (
     <section className="page-intro">
       <Swiper navigation effect="fade" className="swiper-wrapper">
-        {sliderItems.map((item, index) => (
+        {sliderItems?.map((item, index) => (
           <SwiperSlide key={index}>
             <div
               className="page-intro__slide"

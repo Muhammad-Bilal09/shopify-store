@@ -6,41 +6,10 @@ import Footer from "@/components/footer";
 import Content from "@/components/product-single/content";
 import Description from "@/components/product-single/description";
 import Gallery from "@/components/product-single/gallery";
-// import Reviews from "@/components/product-single/reviews";
 import ProductsFeatured from "@/components/products-featured";
 import Layout from "../../layouts/Main";
 import { server } from "../../utils/server";
-
-type ShopifyImageNode = {
-  node: {
-    src: string;
-  };
-};
-
-type ShopifyVariantNode = {
-  node: {
-    id: string;
-    price: {
-      amount: string;
-    };
-  };
-};
-
-type ProductType = {
-  id: string;
-  title: string;
-  descriptionHtml: string;
-  images: {
-    edges: ShopifyImageNode[];
-  };
-  variants: {
-    edges: ShopifyVariantNode[];
-  };
-};
-
-type ProductContentProps = {
-  product: ProductType;
-};
+import { ProductContentProps } from "@/types";
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { pid } = query;
@@ -92,7 +61,6 @@ const Product = ({ product }: ProductContentProps) => {
             </div>
 
             <Description show={showBlock === "description"} />
-            {/* <Reviews show={showBlock === "reviews"} /> */}
           </div>
         </div>
       </section>

@@ -3,11 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Layout from "../layouts/Main";
 import { server } from "../utils/server";
 import { postData } from "../utils/services";
-
-// Define the form data type
-type ForgotMail = {
-  email: string;
-};
+import { ForgotMail } from "@/types";
 
 const ForgotPassword = () => {
   const {
@@ -16,7 +12,6 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm<ForgotMail>();
 
-  // Form submission handler
   const onSubmit: SubmitHandler<ForgotMail> = async (data) => {
     await postData(`${server}/api/forgot-password`, {
       email: data.email,

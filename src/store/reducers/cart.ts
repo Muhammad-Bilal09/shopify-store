@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import type { ProductStoreType } from "@/types";
 
-interface CartTypes {
+type CartTypes = {
   cartItems: ProductStoreType[];
-}
+};
 
 const initialState = {
   cartItems: [],

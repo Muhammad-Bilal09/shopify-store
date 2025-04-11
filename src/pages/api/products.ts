@@ -1,37 +1,5 @@
+import { ShopifyProductResponse } from "@/types";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-interface ImageNode {
-  src: string;
-}
-
-interface VariantNode {
-  id: string;
-  title: string;
-  price: {
-    amount: string;
-    currencyCode: string;
-  };
-}
-
-interface ProductNode {
-  id: string;
-  title: string;
-  descriptionHtml: string;
-  images: {
-    edges: { node: ImageNode }[];
-  };
-  variants: {
-    edges: { node: VariantNode }[];
-  };
-}
-
-interface ShopifyProductResponse {
-  data: {
-    products: {
-      edges: { node: ProductNode }[];
-    };
-  };
-}
 
 const RAW_SHOPIFY_API_URL = process.env.SHOPIFY_DOMAIN_NAME;
 const SHOPIFY_ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN ?? "";

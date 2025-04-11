@@ -1,3 +1,4 @@
+import { footerLinks, socialLinks } from "@/constants/constants";
 import Logo from "../../assets/icons/logo";
 
 const Footer = () => {
@@ -14,87 +15,37 @@ const Footer = () => {
               in between – but most importantly, for the fashionable
             </p>
             <ul className="site-footer__social-networks">
-              <li>
-                <a href="#">
-                  <i className="icon-facebook" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="icon-twitter" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="icon-linkedin" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="icon-instagram" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="icon-youtube-play" />
-                </a>
-              </li>
+              {socialLinks?.map((link, index) => (
+                <li key={index}>
+                  <a href="#">
+                    <i className={link.icon} />
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="site-footer__links">
-            <ul>
-              <li>Shopping online</li>
-              <li>
-                <a href="#">Order Status</a>
-              </li>
-              <li>
-                <a href="#">Shipping and Delivery</a>
-              </li>
-              <li>
-                <a href="#">Returns</a>
-              </li>
-              <li>
-                <a href="#">Payment options</a>
-              </li>
-              <li>
-                <a href="#">Contact Us</a>
-              </li>
-            </ul>
-            <ul>
-              <li>Information</li>
-              <li>
-                <a href="#">Gift Cards</a>
-              </li>
-              <li>
-                <a href="#">Find a store</a>
-              </li>
-              <li>
-                <a href="#">Newsletter</a>
-              </li>
-              <li>
-                <a href="#">Bacome a member</a>
-              </li>
-              <li>
-                <a href="#">Site feedback</a>
-              </li>
-            </ul>
-            <ul>
-              <li>Contact</li>
-              <li>
-                <a href="#">store@uikit.com</a>
-              </li>
-              <li>
-                <a href="#">Hotline: +1 131 138 138</a>
-              </li>
-            </ul>
+            {footerLinks?.map((section, index) => (
+              <ul key={index}>
+                <li>{section.title}</li>
+                {section.links.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <a href={link.url}>{link.text}</a>
+                  </li>
+                ))}
+              </ul>
+            ))}
           </div>
         </div>
       </div>
 
       <div className="site-footer__bottom">
         <div className="container">
-          <p>DESIGN BY ICEO.CO - © 2019. ALL RIGHTS RESERVED.</p>
+          <p>
+            DESIGN BY Muhammad-Bilal - © {new Date().getFullYear()}. ALL RIGHTS
+            RESERVED.
+          </p>
         </div>
       </div>
     </footer>

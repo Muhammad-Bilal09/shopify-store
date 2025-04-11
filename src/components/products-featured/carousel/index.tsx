@@ -1,9 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductItem from "../../product-item";
-// import ProductsLoading from "./loading";
 
-// GraphQL query to fetch products
 const GET_PRODUCTS = gql`
   query GetProducts {
     products(first: 10) {
@@ -41,10 +39,9 @@ const ProductsCarousel = () => {
   const { data, error } = useQuery(GET_PRODUCTS);
 
   if (error) return <div>Failed to load products</div>;
-  // if (loading) return <ProductsLoading />;
 
   const products = data?.products?.edges?.map(({ node: product }: any) => ({
-    id: product.id.split("/").pop(), // Extract numeric ID
+    id: product.id.split("/").pop(),
     name: product.title,
     price: product.variants.edges[0]?.node.price.amount || "N/A",
     currentPrice: product.variants.edges[0]?.node.price.amount || "N/A",
@@ -52,7 +49,6 @@ const ProductsCarousel = () => {
     images: product.images.edges.map((img: any) => img.node.src),
   }));
 
-  // Responsive settings for Swiper
   let slidesPerView = 1.3;
   let centeredSlides = true;
   let spaceBetween = 30;

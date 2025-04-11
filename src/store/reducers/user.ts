@@ -16,10 +16,10 @@ type ToggleFavType = {
   id: string;
 };
 
-interface UserSliceTypes {
+type UserSliceTypes = {
   user: any;
   favProducts: string[];
-}
+};
 
 const initialState = {
   user: {

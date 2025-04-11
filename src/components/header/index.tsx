@@ -7,12 +7,7 @@ import useOnClickOutside from "use-onclickoutside";
 import type { RootState } from "@/store";
 
 import Logo from "../../assets/icons/logo";
-
-type HeaderType = {
-  isErrorPage?: boolean;
-  searchTerm: string;
-  setSearchTerm?: (term: string) => void;
-};
+import { HeaderType } from "@/types";
 
 const Header = ({ isErrorPage, searchTerm, setSearchTerm }: HeaderType) => {
   const router = useRouter();

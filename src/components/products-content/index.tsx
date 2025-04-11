@@ -44,7 +44,7 @@ const GET_PRODUCTS = gql`
 
 const ProductsContent = ({
   selectedCollection,
-  searchTerm, // Add searchTerm prop
+  searchTerm,
 }: {
   selectedCollection: string | null;
   searchTerm: string;
@@ -147,7 +147,7 @@ const ProductsContent = ({
               <ProductItem
                 id={productId}
                 name={product.title}
-                images={product.images.edges.map((img: any) => img.node.src)}
+                images={product.images.edges?.map((img: any) => img.node.src)}
                 currentPrice={
                   product.variants.edges[0]?.node.price.amount || "N/A"
                 }

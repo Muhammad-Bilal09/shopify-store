@@ -1,3 +1,4 @@
+import { ContentfulResponseSubscribe, SubscribeItem } from "@/types";
 import { useEffect, useState } from "react";
 
 const CONTENTFUL_SPACE_ID = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!;
@@ -16,22 +17,6 @@ const GET_SUBSCRIBE_CONTENT = `
     }
   }
 `;
-
-interface SubscribeItem {
-  title: string;
-  image: {
-    url: string;
-  };
-}
-
-interface ContentfulResponse {
-  data: {
-    subscribeCollection?: {
-      items: SubscribeItem[];
-    };
-  };
-  errors?: { message: string }[];
-}
 
 const Subscribe = () => {
   const [subscribeData, setSubscribeData] = useState<SubscribeItem | null>(
@@ -55,7 +40,7 @@ const Subscribe = () => {
           }
         );
 
-        const json: ContentfulResponse = await response.json();
+        const json: ContentfulResponseSubscribe = await response.json();
 
         if (json.errors) {
           throw new Error(json.errors.map((err) => err.message).join(", "));

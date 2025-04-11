@@ -4,6 +4,7 @@ import PageIntro from "@/components/page-intro";
 import ProductsFeatured from "@/components/products-featured";
 import Subscribe from "@/components/subscribe";
 import Layout from "../layouts/Main";
+import { ContentfulResponseIndex, FeaturedItem } from "@/types";
 
 const CONTENTFUL_SPACE_ID = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!;
 const CONTENTFUL_ACCESS_TOKEN =
@@ -66,29 +67,6 @@ const GET_FEATURED_DATA = `
   }
 `;
 
-interface FeaturedItem {
-  title: string;
-  image?: {
-    url: string;
-  };
-  buttontext?: string;
-  description?: string;
-  price?: string;
-}
-
-interface ContentfulResponse {
-  data: {
-    moredetailsCollection?: { items: FeaturedItem[] };
-    viewallCollection?: { items: FeaturedItem[] };
-    showcollectionCollection?: { items: FeaturedItem[] };
-    shippingCollection?: { items: FeaturedItem[] };
-    paymentCollection?: { items: FeaturedItem[] };
-    guaranteeCollection?: { items: FeaturedItem[] };
-    assetsCollection?: { items: FeaturedItem[] };
-  };
-  errors?: { message: string }[];
-}
-
 const IndexPage = () => {
   const [featuredItems, setFeaturedItems] = useState<FeaturedItem[]>([]);
   const [infoItems, setInfoItems] = useState<FeaturedItem[]>([]);
@@ -110,7 +88,7 @@ const IndexPage = () => {
           }
         );
 
-        const json: ContentfulResponse = await response.json();
+        const json: ContentfulResponseIndex = await response.json();
 
         if (json.errors) {
           throw new Error(json.errors.map((err) => err.message).join(", "));

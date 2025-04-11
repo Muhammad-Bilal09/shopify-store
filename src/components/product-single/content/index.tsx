@@ -9,37 +9,7 @@ import { toggleFavProduct } from "@/store/reducers/user";
 import productsColors from "../../../utils/data/products-colors";
 import productsSizes from "../../../utils/data/products-sizes";
 import CheckboxColor from "../../products-filter/form-builder/checkbox-color";
-
-type ShopifyImageNode = {
-  node: {
-    src: string;
-  };
-};
-
-type ShopifyVariantNode = {
-  node: {
-    id: string;
-    price: {
-      amount: string;
-    };
-  };
-};
-
-type ProductType = {
-  id: string;
-  title: string;
-  descriptionHtml: string;
-  images: {
-    edges: ShopifyImageNode[];
-  };
-  variants: {
-    edges: ShopifyVariantNode[];
-  };
-};
-
-type ProductContentProps = {
-  product: ProductType;
-};
+import { ProductContentProps } from "@/types";
 
 const Content = ({ product }: ProductContentProps) => {
   const dispatch = useDispatch();

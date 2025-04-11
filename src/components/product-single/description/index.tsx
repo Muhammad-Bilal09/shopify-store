@@ -1,6 +1,4 @@
-type ProductDescriptionType = {
-  show: boolean;
-};
+import { ProductDescriptionType } from "@/types";
 
 const Description = ({ show }: ProductDescriptionType) => {
   const style = {
