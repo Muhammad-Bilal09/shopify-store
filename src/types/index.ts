@@ -219,3 +219,8 @@ export type ContentfulResponseIndex = {
   };
   errors?: { message: string }[];
 };
+
+export type LayoutType = {
+  title?: string;
+  children?: React.ReactNode;
+};

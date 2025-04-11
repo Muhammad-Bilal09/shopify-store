@@ -69,7 +69,7 @@ const PageIntro: React.FC = () => {
     fetchData();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
   if (error) return <p>Error loading slider data: {error}</p>;
 
   return (

@@ -117,7 +117,7 @@ const IndexPage = () => {
     fetchData();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
   if (error) return <p>Error loading featured data: {error}</p>;
 
   return (
