@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
@@ -13,24 +15,57 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+
+  // Validation functions
+  const isValidName = (name: string) => /^[a-zA-Z]+$/.test(name.trim());
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const isValidPassword = (password: string) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Reset errors
+    setError("");
+    setSuccess("");
+
+    // Validate inputs
     if (!firstName || !lastName || !email || !password) {
       setError("All fields are required.");
       return;
     }
 
+    if (!isValidName(firstName)) {
+      setError("First name should contain letters only.");
+      return;
+    }
+
+    if (!isValidName(lastName)) {
+      setError("Last name should contain letters only.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      setError(
+        "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
+      );
+      return;
+    }
+
     if (!termsAgreed) {
-      alert("You must agree to the terms and conditions.");
+      setError("You must agree to the terms and conditions.");
       return;
     }
 
     setLoading(true);
-    setError("");
-    setSuccess("");
 
     try {
       const response = await axios.post("/api/register", {
@@ -38,7 +73,6 @@ const RegisterPage = () => {
         email,
         password,
       });
-      console.log(response, "register response");
 
       if (response.status === 201) {
         setSuccess("Registration successful! You can now log in.");
@@ -54,9 +88,7 @@ const RegisterPage = () => {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        setError(
-          err.response?.data || "Registration failed. Please try again."
-        );
+        setError(err.response?.data?.message || "Registration failed. Please try again.");
       } else {
         setError("Registration failed. Please try again.");
       }
@@ -82,15 +114,49 @@ const RegisterPage = () => {
             </h2>
             <p className="form-block__description">
               Welcome to E-Shop! Create an account to enjoy exclusive benefits,
-              faster checkout, and personalized recommendations. Join our
-              community of happy shoppers today!
+              faster checkout, and personalized recommendations.
             </p>
 
-            {error && <p className="form-error">{error}</p>}
+            {error && <p className="form-error" style={{ color: "red", marginTop: "20px", textAlign: "center" }}>{error}</p>}
             {success && <p className="form-success">{success}</p>}
 
+
+
             <form className="form" onSubmit={handleSubmit}>
+
               <div className="form__input-row">
+                <input
+                  className="form__input"
+                  placeholder="First Name"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]*$/.test(e.key)) {
+                      e.preventDefault(); // block anything other than letters
+                    }
+                  }}
+                />
+              </div>
+
+              <div className="form__input-row">
+                <input
+                  className="form__input"
+                  placeholder="Last Name"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]*$/.test(e.key)) {
+                      e.preventDefault(); // block anything other than letters
+                    }
+                  }}
+                />
+              </div>
+
+
+
+              {/* <div className="form__input-row">
                 <input
                   className="form__input"
                   placeholder="First Name"
@@ -108,7 +174,7 @@ const RegisterPage = () => {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
-              </div>
+              </div> */}
 
               <div className="form__input-row">
                 <input
