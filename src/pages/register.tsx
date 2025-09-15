@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Layout from "../layouts/Main";
 
 const RegisterPage = () => {
@@ -86,7 +86,7 @@ const RegisterPage = () => {
           router.push("/login");
         }, 2000);
       }
-    } catch (err) {
+    } catch (err: any) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || "Registration failed. Please try again.");
       } else {
@@ -118,12 +118,9 @@ const RegisterPage = () => {
             </p>
 
             {error && <p className="form-error" style={{ color: "red", marginTop: "20px", textAlign: "center" }}>{error}</p>}
-            {success && <p className="form-success">{success}</p>}
-
-
+            {success && <p className="form-success" style={{ color: "green", marginTop: "20px", textAlign: "center" }}>{success}</p>}
 
             <form className="form" onSubmit={handleSubmit}>
-
               <div className="form__input-row">
                 <input
                   className="form__input"
@@ -133,7 +130,7 @@ const RegisterPage = () => {
                   onChange={(e) => setFirstName(e.target.value)}
                   onKeyPress={(e) => {
                     if (!/^[a-zA-Z]*$/.test(e.key)) {
-                      e.preventDefault(); // block anything other than letters
+                      e.preventDefault();
                     }
                   }}
                 />
@@ -148,33 +145,11 @@ const RegisterPage = () => {
                   onChange={(e) => setLastName(e.target.value)}
                   onKeyPress={(e) => {
                     if (!/^[a-zA-Z]*$/.test(e.key)) {
-                      e.preventDefault(); // block anything other than letters
+                      e.preventDefault();
                     }
                   }}
                 />
               </div>
-
-
-
-              {/* <div className="form__input-row">
-                <input
-                  className="form__input"
-                  placeholder="First Name"
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </div>
-
-              <div className="form__input-row">
-                <input
-                  className="form__input"
-                  placeholder="Last Name"
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </div> */}
 
               <div className="form__input-row">
                 <input
@@ -222,7 +197,7 @@ const RegisterPage = () => {
                 className="btn btn--rounded btn--yellow btn-submit"
                 disabled={loading}
               >
-                {loading ? <div>Signing up...</div> : "Sign up"}
+                {loading ? "Signing up..." : "Sign up"}
               </button>
 
               <p className="form__signup-link">
