@@ -73,20 +73,35 @@ const Subscribe = () => {
   const { title, image } = subscribeData;
 
   return (
-    <section className="subscribe">
+    <section className="newsletter-section">
       <div className="container">
-        <div
-          style={{ backgroundImage: `url(${image.url})` }}
-          className="subscribe__content"
-        >
-          <h4>{title}</h4>
+        <div className="newsletter-card">
+          {/* Left Column: Form Content */}
+          <div className="newsletter-card__content">
+            <h3 className="newsletter-card__title">{title}</h3>
+            <p className="newsletter-card__text">
+              Subscribe now to get 15% off your first order, plus farm fresh recipes, organic living tips, and weekly deals delivered straight to your inbox.
+            </p>
+            <form
+              className="newsletter-card__form"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="newsletter-card__input"
+              />
+              <button type="submit" className="newsletter-card__btn">
+                Subscribe
+              </button>
+            </form>
+          </div>
 
-          <form className="subscribe__form">
-            <input type="email" placeholder="Email address" />
-            <button type="submit" className="btn btn--rounded btn--yellow">
-              Subscribe
-            </button>
-          </form>
+          {/* Right Column: Image */}
+          <div
+            className="newsletter-card__image"
+            style={{ backgroundImage: `url(${image.url})` }}
+          />
         </div>
       </div>
     </section>

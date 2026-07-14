@@ -1,12 +1,29 @@
 :root {
-  // colors
-  --color-orange: #FBB03B;
-  --color-orange-light: #FFF3DF;
-  --color-black: #333333;
-  --color-text: #868686;
-  --color-white: #FFFFFF;
-  --color-gray: #706c61;
-  --color-red: #FF0000;
+  // Brand Color Palette (GreenOrganic)
+  --color-primary: #2E7D32;       // Primary Green
+  --color-secondary: #43A047;     // Secondary Green
+  --color-light-green: #81C784;   // Light Green
+  --color-mint-green: #E8F5E9;    // Mint Green
+  --color-cream: #FAFDF8;         // Cream Background
+  --color-white: #FFFFFF;         // Pure White
+  --color-black: #1B1B1B;         // Dark Text
+  --color-text: #666666;          // Gray Text
+  --color-accent: #FF8F00;        // Accent Orange (CTA only)
+  --color-border: #E5E7EB;        // Light Border
+  
+  // Legacy mappings for automatic transition
+  --color-orange: #2E7D32;
+  --color-orange-light: #E8F5E9;
+  --color-gray: #666666;
+  --color-red: #E53935;
+
+  // Custom UI Tokens
+  --border-radius: 12px;
+  --border-radius-lg: 20px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 20px rgba(46, 125, 50, 0.08);
+  --shadow-lg: 0 10px 30px rgba(46, 125, 50, 0.12);
 }
 
 @mixin inputPlaceholder() {

@@ -1,11 +1,23 @@
+import { gql, useQuery } from "@apollo/client";
 import Slider from "rc-slider";
 import { useState } from "react";
-import productsColors from "../../utils/data/products-colors";
-import productsSizes from "../../utils/data/products-sizes";
-import productsTypes from "../../utils/data/products-types";
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
+
+const GET_COLLECTIONS = gql`
+  query GetCollections {
+    collections(first: 50) {
+      edges {
+        node {
+          id
+          title
+          handle
+        }
+      }
+    }
+  }
+`;
 
 const ProductsFilter = ({
   selectedCollection,
@@ -15,15 +27,32 @@ const ProductsFilter = ({
   onSelectCollection: (collection: string | null) => void;
 }) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [priceRange, setPriceRange] = useState([3, 10]);
+  const [priceRange, setPriceRange] = useState([0, 200]);
+
+  const { data, loading } = useQuery(GET_COLLECTIONS);
+
+  const collections =
+    data?.collections?.edges?.map(({ node }: any) => node) || [];
+
   const handleCollectionChange = (collection: string | null) => {
     onSelectCollection(collection);
   };
 
-  const applyFilters = () => {
-    console.log("Selected Collection:", selectedCollection);
-    console.log("Price Range:", priceRange);
-  };
+  const btnStyle = (active: boolean) => ({
+    backgroundColor: active ? "var(--color-primary)" : "transparent",
+    color: active ? "#fff" : "var(--color-black)",
+    padding: "9px 14px",
+    border: active ? "none" : "1px solid var(--color-border)",
+    borderRadius: "30px",
+    cursor: "pointer",
+    textAlign: "left" as const,
+    fontSize: "13px",
+    fontWeight: active ? 700 : 400,
+    width: "100%",
+    marginBottom: "6px",
+    fontFamily: "'Manrope', sans-serif",
+    transition: "all 0.2s ease",
+  });
 
   return (
     <form className="products-filter">
@@ -34,7 +63,7 @@ const ProductsFilter = ({
           filtersOpen ? "products-filter__menu-btn--active" : ""
         }`}
       >
-        Add Filter <i className="icon-down-open" />
+        Filter Products <i className="icon-down-open" />
       </button>
 
       <div
@@ -42,128 +71,54 @@ const ProductsFilter = ({
           filtersOpen ? "products-filter__wrapper--open" : ""
         }`}
       >
+        {/* Product Category from Shopify */}
         <div className="products-filter__block">
-          <button type="button">Product type</button>
+          <button type="button">Category</button>
           <div className="products-filter__block__content">
             <button
               type="button"
               onClick={() => handleCollectionChange(null)}
-              style={{
-                backgroundColor:
-                  selectedCollection === null ? "#4CAF50" : "transparent",
-                color: selectedCollection === null ? "#fff" : "#333",
-                padding: "8px 12px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                textAlign: "left",
-                fontSize: "14px",
-                width: "100%",
-                marginBottom: "8px",
-              }}
+              style={btnStyle(selectedCollection === null)}
             >
-              All
+              All Products
             </button>
-            {productsTypes?.map((type) => (
+
+            {loading && (
+              <p style={{ fontSize: "13px", color: "var(--color-text)", padding: "8px 0" }}>
+                Loading categories...
+              </p>
+            )}
+
+            {collections.map((col: any) => (
               <button
-                key={type.id}
+                key={col.id}
                 type="button"
-                onClick={() => handleCollectionChange(type.name)}
-                style={{
-                  backgroundColor:
-                    selectedCollection === type.id ? "#4CAF50" : "transparent",
-                  color: selectedCollection === type.id ? "#fff" : "#333",
-                  padding: "8px 12px",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  fontSize: "14px",
-                  width: "100%",
-                  marginBottom: "8px",
-                }}
+                onClick={() => handleCollectionChange(col.title)}
+                style={btnStyle(selectedCollection === col.title)}
               >
-                {type.name}
+                {col.title}
               </button>
             ))}
           </div>
         </div>
+
+        {/* Price Range */}
         <div className="products-filter__block">
-          <button type="button">Price</button>
+          <button type="button">Price Range</button>
           <div className="products-filter__block__content">
+            <p style={{ fontSize: "12px", color: "var(--color-text)", marginBottom: "12px" }}>
+              ${priceRange[0]} – ${priceRange[1]}
+            </p>
             <Range
               min={0}
-              max={20}
-              defaultValue={[3, 10]}
+              max={500}
+              defaultValue={[0, 200]}
               value={priceRange}
-              onChange={(value) => setPriceRange(value)}
-              tipFormatter={(value) => `${value}%`}
+              onChange={(value: number[]) => setPriceRange(value)}
+              tipFormatter={(value: number) => `$${value}`}
             />
           </div>
         </div>
-
-        <div className="products-filter__block">
-          <button type="button">Size</button>
-          <div className="products-filter__block__content checkbox-square-wrapper">
-            {productsSizes?.map((size) => (
-              <button
-                key={size.id}
-                type="button"
-                onClick={() => handleCollectionChange(size.id)}
-                style={{
-                  backgroundColor:
-                    selectedCollection === size.id ? "#4CAF50" : "transparent",
-                  color: selectedCollection === size.id ? "#fff" : "#333",
-                  padding: "8px 12px",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  fontSize: "14px",
-                  width: "100%",
-                  marginBottom: "8px",
-                }}
-              >
-                {size.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="products-filter__block">
-          <button type="button">Color</button>
-          <div className="products-filter__block__content">
-            <div className="checkbox-color-wrapper">
-              {productsColors?.map((color) => (
-                <button
-                  key={color.id}
-                  type="button"
-                  onClick={() => handleCollectionChange(color.color)}
-                  style={{
-                    backgroundColor: color.color,
-                    border:
-                      selectedCollection === color.color
-                        ? "2px solid #4CAF50"
-                        : "2px solid #ddd",
-                    borderRadius: "50%",
-                    width: "24px",
-                    height: "24px",
-                    cursor: "pointer",
-                    margin: "4px",
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={applyFilters}
-          className="btn btn-submit btn--rounded btn--yellow"
-        >
-          Apply
-        </button>
       </div>
     </form>
   );

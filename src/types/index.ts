@@ -101,6 +101,8 @@ export type ProductTypeStore = {
   id: string;
   title: string;
   descriptionHtml: string;
+  productType?: string;
+  tags?: string[];
   images: {
     edges: ShopifyImageNode[];
   };

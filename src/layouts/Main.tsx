@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/header";
 import { LayoutType } from "@/types";
 
-const MainLayout = ({ children, title = "Next.js Ecommerce" }: LayoutType) => {
+const MainLayout = ({ children, title = "GreenOrganic - Premium Organic & Fresh Grocery Store" }: LayoutType) => {
   const router = useRouter();
   const pathname = router.pathname;
 

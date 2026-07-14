@@ -51,6 +51,8 @@ export async function getProductById(
         id
         title
         descriptionHtml
+        productType
+        tags
         images(first: 5) {
           edges {
             node {

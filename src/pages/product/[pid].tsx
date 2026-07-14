@@ -60,7 +60,7 @@ const Product = ({ product }: ProductContentProps) => {
               </button>
             </div>
 
-            <Description show={showBlock === "description"} />
+            <Description show={showBlock === "description"} descriptionHtml={product.descriptionHtml} />
           </div>
         </div>
       </section>

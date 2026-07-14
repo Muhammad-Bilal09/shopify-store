@@ -72,11 +72,13 @@ const ProductsContent = ({
   const filteredProducts = products
     .filter((product: any) =>
       selectedCollection
-        ? product.collections?.edges.some(
-            (collection: any) =>
-              collection.node.title.toLowerCase() ===
-              selectedCollection.toLowerCase()
-          )
+        ? product.collections?.edges.some((collection: any) => {
+            const colTitle = collection.node.title.toLowerCase();
+            const selCol = selectedCollection.toLowerCase();
+            const cleanTitle = colTitle.endsWith("s") ? colTitle.slice(0, -1) : colTitle;
+            const cleanSel = selCol.endsWith("s") ? selCol.slice(0, -1) : selCol;
+            return colTitle === selCol || cleanTitle === cleanSel;
+          })
         : true
     )
     .filter((product: any) =>

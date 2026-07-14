@@ -124,32 +124,7 @@ const IndexPage = () => {
     <Layout>
       <PageIntro />
 
-      <section className="featured">
-        <div className="container">
-          {featuredItems.map((item, index) => (
-            <article
-              key={index}
-              style={{ backgroundImage: `url(${item.image?.url})` }}
-              className={`featured-item ${
-                index === 0
-                  ? "featured-item-large"
-                  : index === 1
-                    ? "featured-item-small-first"
-                    : "featured-item-small"
-              }`}
-            >
-              <div className="featured-item__content">
-                <h3>{item.title}</h3>
-                {item.buttontext && (
-                  <a href="#" className="btn btn--rounded">
-                    {item.buttontext}
-                  </a>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <ProductsFeatured />
 
       <section className="section">
         <div className="container">
@@ -173,7 +148,51 @@ const IndexPage = () => {
         </div>
       </section>
 
-      <ProductsFeatured />
+      <section className="featured">
+        <div className="container">
+          <header className="featured__header">
+            <h4 className="featured__title">Our Seasonal Collections</h4>
+          </header>
+
+          {featuredItems.map((item, index) => (
+            <article
+              key={index}
+              className={`featured-item ${
+                index === 0
+                  ? "featured-item-large"
+                  : index === 1
+                    ? "featured-item-small-first"
+                    : "featured-item-small"
+              }`}
+            >
+              <div
+                className="featured-item__image"
+                style={{ backgroundImage: `url(${item.image?.url})` }}
+              />
+
+              {/* Content Section */}
+              <div className="featured-item__content">
+                <span className="featured-item__label">
+                  Farm Fresh Selection
+                </span>
+
+                <h3>{item.title}</h3>
+
+                <p>
+                  Carefully harvested organic product sourced from certified local farms. Packed with nutrients and delivered to your doorstep.
+                </p>
+
+                {item.buttontext && (
+                  <a href="/products" className="btn-link">
+                    {item.buttontext} <span style={{ marginLeft: "6px" }}>→</span>
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <Subscribe />
       <Footer />
     </Layout>

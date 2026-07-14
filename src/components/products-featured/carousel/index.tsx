@@ -49,45 +49,46 @@ const ProductsCarousel = () => {
     images: product.images.edges.map((img: any) => img.node.src),
   }));
 
-  let slidesPerView = 1.3;
-  let centeredSlides = true;
-  let spaceBetween = 30;
-
-  if (process.browser) {
-    if (window.innerWidth > 768) {
-      slidesPerView = 3;
-      spaceBetween = 35;
-      centeredSlides = false;
-    }
-    if (window.innerWidth > 1024) {
-      slidesPerView = 4;
-      spaceBetween = 65;
-      centeredSlides = false;
-    }
-  }
-
   return (
-    <Swiper
-      spaceBetween={spaceBetween}
-      loop
-      centeredSlides={centeredSlides}
-      watchOverflow
-      slidesPerView={slidesPerView}
-      className="swiper-wrapper"
-    >
-      {products?.map((item: any) => (
-        <SwiperSlide key={item.id}>
-          <ProductItem
-            id={item.id}
-            name={item.name}
-            price={item.price}
-            color={item.color}
-            currentPrice={item.currentPrice}
-            images={item.images}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="products-carousel-wrapper">
+      <Swiper
+        spaceBetween={16}
+        slidesPerView={1.3}
+        centeredSlides={false}
+        loop={false}
+        watchOverflow
+        className="products-swiper"
+        breakpoints={{
+          480: {
+            slidesPerView: 2.2,
+            spaceBetween: 18,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 24,
+            centeredSlides: false,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 28,
+            centeredSlides: false,
+          },
+        }}
+      >
+        {products?.map((item: any) => (
+          <SwiperSlide key={item.id} className="product-swiper-slide">
+            <ProductItem
+              id={item.id}
+              name={item.name}
+              price={item.price}
+              color={item.color}
+              currentPrice={item.currentPrice}
+              images={item.images}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 

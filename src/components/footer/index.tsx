@@ -8,11 +8,11 @@ const Footer = () => {
         <div className="site-footer__top">
           <div className="site-footer__description">
             <h6>
-              <Logo /> <span>E</span>-Shop
+              <Logo /> <span>Green</span>Organic
             </h6>
             <p>
-              House My Brand designs clothing for the young, the old & everyone
-              in between – but most importantly, for the fashionable
+              GreenOrganic delivers fresh, farm-to-table organic vegetables, fruits,
+              and healthy food products directly to your doorstep. Pure, natural, and sustainable.
             </p>
             <ul className="site-footer__social-networks">
               {socialLinks?.map((link, index) => (
