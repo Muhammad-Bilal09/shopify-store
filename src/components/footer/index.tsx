@@ -7,9 +7,7 @@ const Footer = () => {
       <div className="container">
         <div className="site-footer__top">
           <div className="site-footer__description">
-            <h6>
-              <Logo /> <span>Green</span>Organic
-            </h6>
+            <Logo />
             <p>
               GreenOrganic delivers fresh, farm-to-table organic vegetables, fruits,
               and healthy food products directly to your doorstep. Pure, natural, and sustainable.

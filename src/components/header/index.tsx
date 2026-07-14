@@ -88,9 +88,6 @@ const Header = ({ isErrorPage, searchTerm, setSearchTerm }: HeaderType) => {
         <div className="mobile-drawer__header">
           <div className="mobile-drawer__brand">
             <Logo />
-            <span>
-              <em>Green</em>Organic
-            </span>
           </div>
           <button
             className="mobile-drawer__close"
@@ -177,10 +174,7 @@ const Header = ({ isErrorPage, searchTerm, setSearchTerm }: HeaderType) => {
       <header className={`site-header ${!onTop ? "site-header--fixed" : ""}`}>
         <div className="container">
           <Link href="/" className="site-header__logo-link">
-            <h1 className="site-logo">
-              <Logo />
-              <span>Green</span>Organic
-            </h1>
+            <Logo />
           </Link>
 
           {/* Desktop nav */}

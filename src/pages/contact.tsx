@@ -102,7 +102,7 @@ const ContactPage = () => {
           {[
             { icon: "⚡", label: "Response Time", value: "< 24 hours" },
             { icon: "📞", label: "Phone Support", value: "Mon – Sat, 9AM–6PM" },
-            { icon: "🌍", label: "Farm Location", value: "Islamabad, Pakistan" },
+            { icon: "🌍", label: "Farm Location", value: "Lahore, Pakistan" },
             { icon: "💚", label: "Satisfaction Rate", value: "98%" },
           ].map((stat, i) => (
             <div key={i} style={{
