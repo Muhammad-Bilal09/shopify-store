@@ -29,7 +29,7 @@ const ProductItem = ({
           price: currentPrice?.toString() || "0",
           productPath: `/product/${id}`,
         },
-      })
+      }),
     );
   };
 
@@ -55,16 +55,44 @@ const ProductItem = ({
       </div>
       <div className="product__description">
         <h3>{name}</h3>
-        <div className="product__rating" style={{ display: "flex", gap: "2px", margin: "4px 0 8px 0", alignItems: "center" }}>
+        <div
+          className="product__rating"
+          style={{
+            display: "flex",
+            gap: "2px",
+            margin: "4px 0 8px 0",
+            alignItems: "center",
+          }}
+        >
           <span style={{ color: "#FF8F00", fontSize: "14px" }}>★★★★★</span>
-          <span style={{ fontSize: "12px", color: "var(--color-text)", marginLeft: "4px" }}>(4.8)</span>
+          <span
+            style={{
+              fontSize: "12px",
+              color: "var(--color-text)",
+              marginLeft: "4px",
+            }}
+          >
+            (4.8)
+          </span>
         </div>
         <div
           className={`product__price ${discount ? "product__price--discount" : ""}`}
         >
-          <h4>${currentPrice}</h4>
+          <h4>
+            Rs{" "}
+            {Math.floor(parseFloat(currentPrice)) === parseFloat(currentPrice)
+              ? parseFloat(currentPrice)
+              : parseFloat(currentPrice).toFixed(2)}
+          </h4>
 
-          {discount && <span>${price}</span>}
+          {discount && (
+            <span>
+              Rs{" "}
+              {Math.floor(parseFloat(price)) === parseFloat(price)
+                ? parseFloat(price)
+                : parseFloat(price).toFixed(2)}
+            </span>
+          )}
         </div>
       </div>
     </div>

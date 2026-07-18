@@ -24,7 +24,7 @@ const ShoppingCart = ({
         size,
         count,
         price,
-      })
+      }),
     );
   };
 
@@ -88,7 +88,12 @@ const ShoppingCart = ({
           </button>
         </div>
       </td>
-      <td>${price}</td>
+      <td>
+        Rs{" "}
+        {Math.floor(parseFloat(price)) === parseFloat(price)
+          ? parseFloat(price)
+          : parseFloat(price).toFixed(2)}
+      </td>
       <td className="cart-item-cancel">
         <i className="icon-cancel" onClick={() => removeFromCart()} />
       </td>

@@ -5,8 +5,8 @@ const Logo = () => {
     <Image
       src="/images/logo.png"
       alt="GreenOrganic Logo"
-      width={100}
-      height={100}
+      width={90}
+      height={90}
       style={{
         marginRight: "10px",
         marginLeft: "20px",

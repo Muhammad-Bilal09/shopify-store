@@ -56,48 +56,60 @@ const ShoppingCart = () => {
           )}
 
           {cartItems.length === 0 && (
-            <div style={{
-              textAlign: "center",
-              padding: "60px 20px",
-              backgroundColor: "#ffffff",
-              borderRadius: "24px",
-              border: "1px solid var(--color-border)",
-              boxShadow: "var(--shadow-sm)",
-              margin: "30px 0"
-            }}>
-              <div style={{
-                fontSize: "48px",
-                marginBottom: "20px",
-                color: "var(--color-primary)"
-              }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "60px 20px",
+                backgroundColor: "#ffffff",
+                borderRadius: "24px",
+                border: "1px solid var(--color-border)",
+                boxShadow: "var(--shadow-sm)",
+                margin: "30px 0",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "48px",
+                  marginBottom: "20px",
+                  color: "var(--color-primary)",
+                }}
+              >
                 🛒
               </div>
-              <h3 style={{
-                fontFamily: "'Manrope', sans-serif",
-                fontSize: "24px",
-                fontWeight: "800",
-                color: "var(--color-black)",
-                marginBottom: "10px"
-              }}>
+              <h3
+                style={{
+                  fontFamily: "'Manrope', sans-serif",
+                  fontSize: "24px",
+                  fontWeight: "800",
+                  color: "var(--color-black)",
+                  marginBottom: "10px",
+                }}
+              >
                 Your cart is empty
               </h3>
-              <p style={{
-                color: "var(--color-text)",
-                fontSize: "14px",
-                marginBottom: "30px"
-              }}>
+              <p
+                style={{
+                  color: "var(--color-text)",
+                  fontSize: "14px",
+                  marginBottom: "30px",
+                }}
+              >
                 Looks like you haven't added any organic items to your cart yet.
               </p>
-              <Link href="/products" className="btn btn--rounded btn--yellow" style={{
-                backgroundColor: "var(--color-primary)",
-                color: "#ffffff",
-                padding: "12px 30px",
-                fontWeight: "700",
-                fontSize: "14px",
-                textDecoration: "none",
-                borderRadius: "30px",
-                boxShadow: "0 4px 12px rgba(46, 125, 50, 0.2)"
-              }}>
+              <Link
+                href="/products"
+                className="btn btn--rounded btn--yellow"
+                style={{
+                  backgroundColor: "var(--color-primary)",
+                  color: "#ffffff",
+                  padding: "12px 30px",
+                  fontWeight: "700",
+                  fontSize: "14px",
+                  textDecoration: "none",
+                  borderRadius: "30px",
+                  boxShadow: "0 4px 12px rgba(46, 125, 50, 0.2)",
+                }}
+              >
                 Explore Products
               </Link>
             </div>
@@ -117,7 +129,13 @@ const ShoppingCart = () => {
 
             <div className="cart-actions__items-wrapper">
               <p className="cart-actions__total">
-                Total cost <strong>${priceTotal().toFixed(2)}</strong>
+                Total cost{" "}
+                <strong>
+                  Rs{" "}
+                  {Math.floor(priceTotal()) === priceTotal()
+                    ? priceTotal()
+                    : priceTotal().toFixed(2)}
+                </strong>
               </p>
               <Link
                 href="/cart/checkout"

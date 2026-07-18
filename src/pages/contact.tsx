@@ -35,7 +35,6 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
       <section style={{
         background: "linear-gradient(135deg, #1b5e20 0%, #2e7d32 40%, #388e3c 100%)",
         padding: "120px 20px 80px",
@@ -43,13 +42,12 @@ const ContactPage = () => {
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Decorative blobs */}
         <div style={{ position: "absolute", top: "-80px", left: "-80px", width: "300px", height: "300px", background: "rgba(255,255,255,0.04)", borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: "-60px", right: "-60px", width: "250px", height: "250px", background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "30%", right: "10%", width: "120px", height: "120px", background: "rgba(255,255,255,0.04)", borderRadius: "50%", pointerEvents: "none" }} />
 
         <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto" }}>
-          <div style={{
+          {/* <div style={{
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
@@ -66,7 +64,7 @@ const ContactPage = () => {
             fontFamily: "'Manrope', sans-serif",
           }}>
             🌿 &nbsp; WE&#39;RE HERE TO HELP
-          </div>
+          </div> */}
 
           <h1 style={{
             fontFamily: "'Manrope', sans-serif",
@@ -102,7 +100,7 @@ const ContactPage = () => {
           {[
             { icon: "⚡", label: "Response Time", value: "< 24 hours" },
             { icon: "📞", label: "Phone Support", value: "Mon – Sat, 9AM–6PM" },
-            { icon: "🌍", label: "Farm Location", value: "Lahore, Pakistan" },
+            { icon: "🌍", label: "Office Location", value: "Lahore, Pakistan" },
             { icon: "💚", label: "Satisfaction Rate", value: "98%" },
           ].map((stat, i) => (
             <div key={i} style={{
@@ -138,7 +136,7 @@ const ContactPage = () => {
               {
                 icon: "📞",
                 title: "Call Us",
-                detail: "+92 51 1234567",
+                detail: "042-35198294 / 0300-7864249",
                 sub: "Available Mon – Sat, 9AM to 6PM",
                 color: "#e8f5e9",
                 accent: "#2e7d32",
@@ -146,23 +144,23 @@ const ContactPage = () => {
               {
                 icon: "✉️",
                 title: "Email Us",
-                detail: "hello@greenorganic.com",
+                detail: "sajjadkhichi249@gmail.com",
                 sub: "We reply within 24 business hours",
                 color: "#e3f2fd",
                 accent: "#1565c0",
               },
               {
                 icon: "📍",
-                title: "Visit Our Farm",
-                detail: "Sector 4, Islamabad",
-                sub: "GreenOrganic Farms, Pakistan",
+                title: "Visit Our Office",
+                detail: "Office No. 508, 23 Civic Center",
+                sub: "Barkat Market, Garden Town, Lahore",
                 color: "#fff3e0",
                 accent: "#e65100",
               },
               {
                 icon: "💬",
                 title: "WhatsApp",
-                detail: "+92 300 1234567",
+                detail: "+92 300 7864249",
                 sub: "Quick support via WhatsApp",
                 color: "#f3e5f5",
                 accent: "#6a1b9a",
@@ -213,7 +211,7 @@ const ContactPage = () => {
             ))}
 
             {/* Social Links */}
-            <div style={{
+            {/* <div style={{
               background: "#ffffff",
               borderRadius: "20px",
               padding: "24px",
@@ -250,7 +248,7 @@ const ContactPage = () => {
                   </button>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right — Contact Form */}

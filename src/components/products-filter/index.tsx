@@ -1,9 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import Slider from "rc-slider";
 import { useState } from "react";
-
-const { createSliderWithTooltip } = Slider;
-const Range = createSliderWithTooltip(Slider.Range);
 
 const GET_COLLECTIONS = gql`
   query GetCollections {
@@ -27,7 +23,6 @@ const ProductsFilter = ({
   onSelectCollection: (collection: string | null) => void;
 }) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [priceRange, setPriceRange] = useState([0, 200]);
 
   const { data, loading } = useQuery(GET_COLLECTIONS);
 
@@ -84,7 +79,13 @@ const ProductsFilter = ({
             </button>
 
             {loading && (
-              <p style={{ fontSize: "13px", color: "var(--color-text)", padding: "8px 0" }}>
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "var(--color-text)",
+                  padding: "8px 0",
+                }}
+              >
                 Loading categories...
               </p>
             )}
@@ -99,24 +100,6 @@ const ProductsFilter = ({
                 {col.title}
               </button>
             ))}
-          </div>
-        </div>
-
-        {/* Price Range */}
-        <div className="products-filter__block">
-          <button type="button">Price Range</button>
-          <div className="products-filter__block__content">
-            <p style={{ fontSize: "12px", color: "var(--color-text)", marginBottom: "12px" }}>
-              ${priceRange[0]} – ${priceRange[1]}
-            </p>
-            <Range
-              min={0}
-              max={500}
-              defaultValue={[0, 200]}
-              value={priceRange}
-              onChange={(value: number[]) => setPriceRange(value)}
-              tipFormatter={(value: number) => `$${value}`}
-            />
           </div>
         </div>
       </div>

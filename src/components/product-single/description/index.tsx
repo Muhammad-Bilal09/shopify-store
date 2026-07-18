@@ -16,7 +16,14 @@ const Description = ({ show, descriptionHtml }: DescriptionProps) => {
           <div 
             className="organic-description-content"
             style={{ marginTop: "15px", lineHeight: "1.7", color: "var(--color-text)" }}
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }} 
+            dangerouslySetInnerHTML={{
+              __html: descriptionHtml.replace(/style=["']([^"']*)["']/gi, (match, styleContent) => {
+                if (/position:\s*fixed/i.test(styleContent)) {
+                  return 'style="position: relative; display: block; max-height: none; overflow: visible; pointer-events: auto; z-index: auto;"';
+                }
+                return match;
+              })
+            }} 
           />
         ) : (
           <p style={{ marginTop: "15px", color: "var(--color-text)" }}>
