@@ -90,9 +90,9 @@ const ShoppingCart = ({
       </td>
       <td>
         Rs{" "}
-        {Math.floor(parseFloat(price)) === parseFloat(price)
-          ? parseFloat(price)
-          : parseFloat(price).toFixed(2)}
+        {Math.floor(price) === price
+          ? price
+          : price.toFixed(2)}
       </td>
       <td className="cart-item-cancel">
         <i className="icon-cancel" onClick={() => removeFromCart()} />

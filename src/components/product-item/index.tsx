@@ -6,6 +6,15 @@ import type { RootState } from "@/store";
 import { toggleWishlistProduct } from "@/store/reducers/user";
 import type { ProductTypeList } from "@/types";
 
+const formatPrice = (value?: number) => {
+  const numericValue =
+    typeof value === "number" && Number.isFinite(value) ? value : 0;
+
+  return Math.floor(numericValue) === numericValue
+    ? numericValue.toString()
+    : numericValue.toFixed(2);
+};
+
 const ProductItem = ({
   discount,
   images,
@@ -78,21 +87,9 @@ const ProductItem = ({
         <div
           className={`product__price ${discount ? "product__price--discount" : ""}`}
         >
-          <h4>
-            Rs{" "}
-            {Math.floor(parseFloat(currentPrice)) === parseFloat(currentPrice)
-              ? parseFloat(currentPrice)
-              : parseFloat(currentPrice).toFixed(2)}
-          </h4>
+          <h4>Rs {formatPrice(currentPrice)}</h4>
 
-          {discount && (
-            <span>
-              Rs{" "}
-              {Math.floor(parseFloat(price)) === parseFloat(price)
-                ? parseFloat(price)
-                : parseFloat(price).toFixed(2)}
-            </span>
-          )}
+          {discount && <span>Rs {formatPrice(price)}</span>}
         </div>
       </div>
     </div>
