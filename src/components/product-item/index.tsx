@@ -6,13 +6,32 @@ import type { RootState } from "@/store";
 import { toggleWishlistProduct } from "@/store/reducers/user";
 import type { ProductTypeList } from "@/types";
 
-const formatPrice = (value?: number) => {
-  const numericValue =
-    typeof value === "number" && Number.isFinite(value) ? value : 0;
+const formatPrice = (value?: number | string) => {
+  if (value === undefined || value === null || value === "") {
+    return "N/A";
+  }
 
-  return Math.floor(numericValue) === numericValue
-    ? numericValue.toString()
-    : numericValue.toFixed(2);
+  const numericValue =
+    typeof value === "number" && Number.isFinite(value)
+      ? value
+      : typeof value === "string" &&
+          value.trim() !== "" &&
+          !Number.isNaN(Number(value))
+        ? Number(value)
+        : NaN;
+
+  if (!Number.isNaN(numericValue)) {
+    return Math.floor(numericValue) === numericValue
+      ? numericValue.toString()
+      : numericValue.toFixed(2);
+  }
+
+  return value.toString();
+};
+
+const renderPrice = (value?: number | string) => {
+  const formatted = formatPrice(value);
+  return formatted === "N/A" ? "N/A" : `Rs ${formatted}`;
 };
 
 const ProductItem = ({
@@ -87,9 +106,9 @@ const ProductItem = ({
         <div
           className={`product__price ${discount ? "product__price--discount" : ""}`}
         >
-          <h4>Rs {formatPrice(currentPrice)}</h4>
+          <h4>{renderPrice(currentPrice)}</h4>
 
-          {discount && <span>Rs {formatPrice(price)}</span>}
+          {discount && <span>{renderPrice(price)}</span>}
         </div>
       </div>
     </div>

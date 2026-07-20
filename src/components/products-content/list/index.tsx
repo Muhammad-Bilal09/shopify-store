@@ -47,7 +47,7 @@ const GET_PRODUCTS = gql`
 const ProductsContent = () => {
   const { data, loading, error } = useQuery(GET_PRODUCTS);
   const [selectedCollection, setSelectedCollection] = useState<string | null>(
-    null
+    null,
   );
 
   if (error) {
@@ -65,8 +65,8 @@ const ProductsContent = () => {
   const filteredProducts = selectedCollection
     ? products.filter((product: any) =>
         product.collections.edges.some(
-          (collection: any) => collection.node.title === selectedCollection
-        )
+          (collection: any) => collection.node.title === selectedCollection,
+        ),
       )
     : products;
 
@@ -109,9 +109,11 @@ const ProductsContent = () => {
                 name={product.title}
                 images={product.images.edges.map((img: any) => img.node.src)}
                 currentPrice={
-                  product.variants.edges[0]?.node.price.amount || "N/A"
+                  Number(product.variants.edges[0]?.node.price.amount) || 0
                 }
-                price={product.variants.edges[0]?.node.price.amount || "N/A"}
+                price={
+                  Number(product.variants.edges[0]?.node.price.amount) || 0
+                }
                 color="Default"
               />
             </Link>

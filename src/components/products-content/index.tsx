@@ -75,14 +75,18 @@ const ProductsContent = ({
         ? product.collections?.edges.some((collection: any) => {
             const colTitle = collection.node.title.toLowerCase();
             const selCol = selectedCollection.toLowerCase();
-            const cleanTitle = colTitle.endsWith("s") ? colTitle.slice(0, -1) : colTitle;
-            const cleanSel = selCol.endsWith("s") ? selCol.slice(0, -1) : selCol;
+            const cleanTitle = colTitle.endsWith("s")
+              ? colTitle.slice(0, -1)
+              : colTitle;
+            const cleanSel = selCol.endsWith("s")
+              ? selCol.slice(0, -1)
+              : selCol;
             return colTitle === selCol || cleanTitle === cleanSel;
           })
-        : true
+        : true,
     )
     .filter((product: any) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      product.title.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
   if (!filteredProducts || filteredProducts.length === 0) {
@@ -98,6 +102,7 @@ const ProductsContent = ({
       style={{
         display: "flex",
         flexWrap: "wrap",
+        justifyContent: "center",
         gap: "20px",
         padding: "20px",
         maxWidth: "1400px",
@@ -128,7 +133,6 @@ const ProductsContent = ({
                 textDecoration: "none",
                 color: "inherit",
                 display: "block",
-                border: "1px solid #e0e0e0",
                 borderRadius: "8px",
                 overflow: "hidden",
                 transition: "transform 0.2s, box-shadow 0.2s",
@@ -151,9 +155,11 @@ const ProductsContent = ({
                 name={product.title}
                 images={product.images.edges?.map((img: any) => img.node.src)}
                 currentPrice={
-                  product.variants.edges[0]?.node.price.amount || "N/A"
+                  Number(product.variants.edges[0]?.node.price.amount) || 0
                 }
-                price={product.variants.edges[0]?.node.price.amount || "N/A"}
+                price={
+                  Number(product.variants.edges[0]?.node.price.amount) || 0
+                }
                 color="Default"
               />
             </Link>

@@ -40,14 +40,15 @@ const ProductsCarousel = () => {
 
   if (error) return <div>Failed to load products</div>;
 
-  const products = data?.products?.edges?.map(({ node: product }: any) => ({
-    id: product.id.split("/").pop(),
-    name: product.title,
-    price: product.variants.edges[0]?.node.price.amount || "N/A",
-    currentPrice: product.variants.edges[0]?.node.price.amount || "N/A",
-    color: "Default",
-    images: product.images.edges.map((img: any) => img.node.src),
-  }));
+  const products =
+    data?.products?.edges?.map(({ node: product }: any) => ({
+      id: product.id.split("/").pop(),
+      name: product.title,
+      price: Number(product.variants.edges[0]?.node.price.amount) || 0,
+      currentPrice: Number(product.variants.edges[0]?.node.price.amount) || 0,
+      color: "Default",
+      images: product.images.edges.map((img: any) => img.node.src),
+    })) || [];
 
   return (
     <div className="products-carousel-wrapper">
