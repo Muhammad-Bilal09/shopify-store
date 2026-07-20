@@ -1159,6 +1159,13 @@ h1,h2,h3,h4,h5 {
     @include breakpoint(tablet-lg) {
       margin-bottom: 0;
     }
+    .logo-image {
+      width: 80px;
+      height: 80px;
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
     svg {
       object-fit: contain;
       width: 45px;
@@ -3003,6 +3010,13 @@ h1,h2,h3,h4,h5 {
   color: var(--color-black);
   font-family: 'Manrope', sans-serif;
 
+  .logo-image {
+    width: 45px;
+    height: 45px;
+    margin-left: 0;
+    margin-right: 10px;
+  }
+
   svg {
     width: 32px;
     height: 24px;
@@ -3197,6 +3211,24 @@ h1,h2,h3,h4,h5 {
   display: flex;
   align-items: center;
   text-decoration: none;
+}
+
+.logo-image {
+  width: 70px;
+  height: 70px;
+  margin-left: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+
+  @include breakpointMax(phone) {
+    width: 45px;
+    height: 45px;
+    margin-left: 10px;
+    margin-right: 5px;
+  }
 }
 
 // --------------------------------------------------
